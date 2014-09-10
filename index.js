@@ -1,17 +1,19 @@
 var Hapi = require('hapi')
 var server = new Hapi.Server(3000)
-var arrivals = require('./arrivals')
+var arrivals = require('./server/arrivals')
 var watchify = require('watchify/bin/args')
+var brfs = require('brfs')
 
 var bundle = watchify()
 
-bundle.add('./client.js')
+bundle.add('./client/index.js')
+bundle.transform(brfs)
 
 server.route({
     method: 'GET'
   , path: '/'
   , handler: {
-        file: './index.html'
+        file: './static/index.html'
     }
 })
 
@@ -19,7 +21,7 @@ server.route({
     method: 'GET'
   , path: '/index.css'
   , handler: {
-        file: './index.css'
+        file: './static/index.css'
     }
 })
 

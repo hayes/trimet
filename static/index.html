@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trimet</title>
+  <link rel="stylesheet" href="./index.css">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+</head>
+<body>
+  <header>
+    <div class="title-stack" style="width: {{ stack.length }}00%; left: -{{index}}00%;">
+      <div class="title-wrap" style="width: {{ 100 / stack.length }}%;">
+        <a href="#" rel="sidebar-toggle">
+          <svg class="menu" viewBox="0 0 24.00 24.00">
+            <path stroke-width="0.2" stroke-linejoin="round" d="M 3,6L 21,6L 21,8L 3,8L 3,6 Z M 3,11L 21,11L 21,13L 3,13L 3,11 Z M 3,16L 21,16L 21,18L 3,18L 3,16 Z "/>
+          </svg>
+        </a>
+        <span>
+          {{ stack.0.title }}
+        </span>
+      </div>
+      <div altr-for="frame in stack" style="width: {{ ((stack.length - 1) / stack.length) * 100}}%;">
+        <div class="title-wrap" altr-if="$index" style="width: {{ 100 / (stack.length - 1) }}%;">
+          <a href="#" rel="pop">
+            <svg class="pop" viewBox="0 0 24.00 24.00">
+              <path stroke-width="0.2" stroke-linejoin="round" d="M 13,18L 6,11L 13,4L 13,8C 21,8 24,19 24,19C 24,19 21,14 13,14L 13,18 Z M 7,18L 0,11L 7,4L 7,7L 3,11L 7,15L 7,18 Z "/>
+            </svg>
+          </a>
+          <span>
+            {{ frame.title }}
+          </span>
+      </div>
+      </div>
+    </div>
+  </header>
+  <div rel="main" altr-for="frame in stack">
+    <section class="{{index > $index ? 'off-left' : index < $index ? 'off-right' : ''}}" altr-children="frame.el">
+    </section>
+  </div>
+  <div class="sidebar hidden" rel="sidebar">Hello</div>
+  <script type="text/javascript" src="./client.js"></script>
+</body>
+</html>

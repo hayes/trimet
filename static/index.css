@@ -30,21 +30,42 @@ header {
   position: absolute;
   width: 100%;
   height: 40px;
-  padding: 5px;
+  padding: 5px 0;
   margin-bottom: 20px;
   background-color: #ff9800;
   box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 5px 0px;
   color: #fff3e0;
   z-index: 500;
+  overflow: hidden;
+}
+
+header .title-stack {
+  position: absolute;
+  transition: left .5s;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+}
+
+header .title-stack > div {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
 }
 
 header svg.menu {
+  margin-left: -10px;
+}
+
+header svg.menu, header svg.pop {
   fill: #fff3e0;
   opacity: 1;
   width: 30px;
   height: 30px;
-  margin-left: -15px;
 }
+
+
 div[rel=main] {
   width: 100%;
   height: 100%;
@@ -63,14 +84,14 @@ div[rel=main] > section {
   padding-top: 50px;
 }
 
-.off-left {
+div[rel=main] > section.off-left {
   margin-left: -100%;
   opacity: 0;
   z-index: 0;
   overflow: hidden;
 }
 
-.off-right {
+div[rel=main] > section.off-right {
   margin-left: 100%;
   opacity: 0;
   z-index: 0;
