@@ -8,9 +8,10 @@ altr.addFilter('remaining', function(change) {
   }
 })
 
+var main_el = document.querySelector('[rel=main]')
 var arrival_el = document.querySelector('[rel=arrivals]')
 var detail_el = document.querySelector('[rel=details]')
-var view = altr(arrival_el)
+var view = altr(main_el, {})
 
 arrival_el.removeAttribute('style')
 arrival_el.addEventListener('click', function() {
@@ -26,6 +27,7 @@ detail_el.addEventListener('click', function() {
 var timer
 
 navigator.geolocation.watchPosition(function(location) {
+  arrival_el.classList.remove('off-right')
   clearTimeout(timer)
   update(location)
 })
@@ -35,7 +37,7 @@ function update(location) {
     location.coords.latitude + ',' + location.coords.longitude
 
   request.get(url).pipe(concat(function(data) {
-    view.update({lines: JSON.parse(data)})
+    view.update({lines: JSON.parse(data), location: location})
     timer = setTimeout(update.bind(null, location), 5000)
   }))
 }
