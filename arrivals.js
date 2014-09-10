@@ -1,12 +1,10 @@
 var qs = require('querystring')
 var app_id = 'E21CBC63D8695BCEDC122DE03'
-var location = '45.534054,-122.6495752'
 var concat = require('concat-stream')
 var request = require('hyperquest')
 
-
-module.exports = function(done) {
-  get_stops(location, function(err, stops) {
+module.exports = function(options, done) {
+  get_stops(options.location, function(err, stops) {
     get_arrivals(stops, function(err, arrivals) {
       var lines = {}
         , list = []
@@ -25,9 +23,9 @@ module.exports = function(done) {
 
       function add(stop, route) {
         var line = lines[route.route]
-        
+
         if(!line) {
-            var line = {
+          line = {
               route: route
           }
 
@@ -48,7 +46,7 @@ module.exports = function(done) {
 }
 
 function get_arrivals(stops, done) {
- var options = {
+  var options = {
       appID: app_id
     , locIDs: stops.map(get_locid).join(',')
     , showPosition: true

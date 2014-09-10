@@ -35,8 +35,8 @@ server.route({
     method: 'GET'
   , path: '/arrivals'
   , handler: function(req, reply) {
-      arrivals(function(err, data) {
-        reply(data)
+      arrivals(req.query, function(err, data) {
+        reply(err || data)
       })
     }
 })

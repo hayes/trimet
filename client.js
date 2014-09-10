@@ -23,6 +23,19 @@ detail_el.addEventListener('click', function() {
   detail_el.classList.add('off-right')
 })
 
-request.get('http://' + location.host + '/arrivals').pipe(concat(function(data) {
-  view.update({lines: JSON.parse(data)})
-}))
+var timer
+
+navigator.geolocation.watchPosition(function(location) {
+  clearTimeout(timer)
+  update(location)
+})
+
+function update(location) {
+  var url = 'http://' + window.location.host + '/arrivals?location=' +
+    location.coords.latitude + ',' + location.coords.longitude
+
+  request.get(url).pipe(concat(function(data) {
+    view.update({lines: JSON.parse(data)})
+    timer = setTimeout(update.bind(null, location), 5000)
+  }))
+}
