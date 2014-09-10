@@ -11,6 +11,7 @@ html, body {
 }
 
 header {
+  position: absolute;
   width: 100%;
   height: 40px;
   padding: 5px;
@@ -18,6 +19,7 @@ header {
   background-color: #ff9800;
   box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 5px 0px;
   color: #fff3e0;
+  z-index: 500;
 }
 
 header svg.menu {
@@ -27,10 +29,11 @@ header svg.menu {
   height: 30px;
 }
 div[rel=main] {
-  position: relative;
-  height: 100%;
   width: 100%;
+  padding-top: 50px;
+  position: relative;
   overflow-x: hidden;
+  height: 100%;
 }
 
 div[rel=main] > section {
