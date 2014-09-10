@@ -67,12 +67,14 @@ div[rel=main] > section {
   margin-left: -100%;
   opacity: 0;
   z-index: 0;
+  overflow: hidden;
 }
 
 .off-right {
   margin-left: 100%;
   opacity: 0;
   z-index: 0;
+  overflow: hidden;
 }
 
 ul.card-list {
