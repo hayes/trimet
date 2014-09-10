@@ -37,7 +37,7 @@ function update(location) {
     location.coords.latitude + ',' + location.coords.longitude
 
   request.get(url).pipe(concat(function(data) {
-    view.update({lines: JSON.parse(data), location: location})
+    view.update({lines: JSON.parse(data), location: location}, true)
     timer = setTimeout(update.bind(null, location), 5000)
   }))
 }

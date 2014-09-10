@@ -30,18 +30,18 @@ header svg.menu {
 }
 div[rel=main] {
   width: 100%;
+  height: 100%;
   padding-top: 50px;
   position: relative;
-  overflow-x: hidden;
-  height: 100%;
+  overflow: hidden;
 }
 
 div[rel=main] > section {
   position: absolute;
   width: 100%;
+  height: 100%;
   transition: margin .5s, opacity .5s;
   z-index: 100;
-  overflow-x: hidden;
 }
 
 div[rel=main] > section.off-left {
