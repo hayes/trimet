@@ -30,7 +30,6 @@ div[rel=main] {
   position: relative;
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
 }
 
 div[rel=main] > section {
@@ -38,6 +37,7 @@ div[rel=main] > section {
   width: 100%;
   transition: margin .5s, opacity .5s;
   z-index: 100;
+  overflow-x: hidden;
 }
 
 div[rel=main] > section.off-left {
