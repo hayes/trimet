@@ -3,15 +3,26 @@ var concat = require('concat-stream')
 var altr = require('altr')
 
 altr.addFilter('remaining', function(change) {
-    return function(time) {
-        change(Math.floor((new Date(time) - new Date) / (60 * 1000)))
-    }
+  return function(time) {
+    change(Math.floor((new Date(time) - new Date) / (60 * 1000)))
+  }
 })
 
-var view = altr(document.querySelector('ul'))
+var arrival_el = document.querySelector('[rel=arrivals]')
+var detail_el = document.querySelector('[rel=details]')
+var view = altr(arrival_el)
 
-document.querySelector('ul').removeAttribute('style')
+arrival_el.removeAttribute('style')
+arrival_el.addEventListener('click', function() {
+  arrival_el.classList.add('off-left')
+  detail_el.classList.remove('off-right')
+})
 
-request.get('http://' + location.host + '/arrivals').pipe(concat(function(data) { 
-    view.update({lines: JSON.parse(data)})
+detail_el.addEventListener('click', function() {
+  arrival_el.classList.remove('off-left')
+  detail_el.classList.add('off-right')
+})
+
+request.get('http://' + location.host + '/arrivals').pipe(concat(function(data) {
+  view.update({lines: JSON.parse(data)})
 }))

@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: #00bcd4;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+header {
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  margin-bottom: 20px;
+  background-color: #ff9800;
+  box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 5px 0px;
+  color: #fff3e0;
+}
+
+header svg.menu {
+  fill: #fff3e0;
+  opacity: 1;
+  width: 30px;
+  height: 30px;
+}
+div[rel=main] {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+div[rel=main] > section {
+  position: absolute;
+  width: 100%;
+  transition: margin .5s, opacity .5s;
+  z-index: 100;
+}
+
+div[rel=main] > section.off-left {
+  margin-left: -100%;
+  opacity: 0;
+  z-index: 0;
+}
+
+div[rel=main] > section.off-right {
+  margin-left: 100%;
+  opacity: 0;
+  z-index: 0;
+}
+
+ul.card-list {
+  max-width: 500px;
+  width: 95%;
+  margin: auto;
+  list-style: none;
+  padding: 0;
+}
+
+ul.card-list > li {
+  background: white;
+  margin: 5px 0;
+  padding: 15px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.46);
+}
