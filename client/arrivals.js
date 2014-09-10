@@ -47,6 +47,15 @@ function update() {
 }
 
 function format_route(change) {
+  var colors = {
+      90: 'red'
+    , 100: 'blue'
+    , 190: 'yellow'
+    , 193: 'teal'
+    , 194: 'lime'
+    , 200: 'green'
+  }
+
   return function(route) {
     if(!route) {
       return change('')
@@ -58,6 +67,9 @@ function format_route(change) {
       )
     }
 
-    return change('<span class="rail-line-header">' + route.route + '</span>')
+    return change(
+        '<span class="rail-line-header ' + colors[route.route] + '">' +
+          route.desc + '</span>'
+    )
   }
 }

@@ -55,7 +55,8 @@ function get_arrivals(stops, done) {
     , json: true
   }
 
-  var url = 'http://developer.trimet.org/ws/v2/arrivals?' + qs.stringify(options)
+  var url = 'http://developer.trimet.org/ws/v2/arrivals?' +
+    qs.stringify(options)
 
   request.get(url).pipe(concat(function(data) {
     done(null, JSON.parse(data).resultSet.arrival)

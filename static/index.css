@@ -139,3 +139,33 @@ ul.card-list > li {
   margin-right: 20px;
   text-shadow: rgba(0, 0, 0, 0.46) 0 2px 2px;
 }
+
+[rel=line-arrival] .header .rail-line-header {
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow: rgba(0, 0, 0, 0.46) 0 1px 2px;
+}
+
+.red {
+  color:  #e51c23;
+}
+
+.blue {
+  color:  #5677fc;
+}
+
+.yellow {
+  color:  #5677fc;
+}
+
+.teal {
+  color:  #009688;
+}
+
+.lime {
+  color:  #cddc39;
+}
+
+.green {
+  color:  #259b24;
+}
