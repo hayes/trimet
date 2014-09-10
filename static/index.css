@@ -8,29 +8,32 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
+  font-family: 'Roboto', sans-serif;
+  color: rgba(0, 0, 0, 0.86);
+  font-weight: 300;
 }
 
 .sidebar {
   width: 300px;
-  z-index: 500;
+  z-index: 400;
   position: absolute;
-  top: 40px;
+  top: 30px;
   bottom: 0;
   background: white;
-  box-shadow: rgba(0, 0, 0, 0.258824) 5px 2px 5px 0px;
+  box-shadow: rgba(0, 0, 0, 0.258824) 5px 0px 5px 0px;
   left: 0;
   transition: left .2s;
 }
 
 .sidebar.hidden {
   left: -300px;
+  box-shadow: none;
 }
 
 header {
   position: absolute;
   width: 100%;
-  height: 40px;
-  padding: 5px 0;
+  height: 30px;
   margin-bottom: 20px;
   background-color: #ff9800;
   box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 5px 0px;
@@ -54,17 +57,22 @@ header .title-stack > div {
   font-size: 15px;
 }
 
-header svg.menu {
-  margin-left: -10px;
+header h1 {
+  font-size: 20px;
+  position: absolute;
+  display: inline;
+  font-weight: 400;
+  margin: 2px 30px;
 }
 
 header svg.menu, header svg.pop {
   fill: #fff3e0;
   opacity: 1;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
+  margin: 5px 15px;
+  stroke-width: .5;
 }
-
 
 div[rel=main] {
   width: 100%;
@@ -81,7 +89,7 @@ div[rel=main] > section {
   z-index: 100;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
-  padding-top: 50px;
+  padding-top: 30px;
 }
 
 div[rel=main] > section.off-left {
@@ -109,6 +117,25 @@ ul.card-list {
 ul.card-list > li {
   background: white;
   margin: 5px 0;
-  padding: 15px;
+  padding: 0 0 15px 0;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.46);
+}
+
+
+/*
+  Arrival cards
+*/
+[rel=line-arrival] .header {
+  margin: 0 0 15px 0;
+  padding: 0;
+  padding: 0 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+}
+
+[rel=line-arrival] .header .bus-line-header {
+  color:  #03a9f4;
+  font-size: 32px;
+  font-weight: 700;
+  margin-right: 20px;
+  text-shadow: rgba(0, 0, 0, 0.46) 0 2px 2px;
 }

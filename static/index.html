@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Trimet</title>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="./index.css">
   <meta name="viewport" content="width=device-width, user-scalable=no">
 </head>
@@ -11,23 +12,23 @@
       <div class="title-wrap" style="width: {{ 100 / stack.length }}%;">
         <a href="#" rel="sidebar-toggle">
           <svg class="menu" viewBox="0 0 24.00 24.00">
-            <path stroke-width="0.2" stroke-linejoin="round" d="M 3,6L 21,6L 21,8L 3,8L 3,6 Z M 3,11L 21,11L 21,13L 3,13L 3,11 Z M 3,16L 21,16L 21,18L 3,18L 3,16 Z "/>
+            <path stroke-linejoin="round" d="M 3,6L 21,6L 21,8L 3,8L 3,6 Z M 3,11L 21,11L 21,13L 3,13L 3,11 Z M 3,16L 21,16L 21,18L 3,18L 3,16 Z "/>
           </svg>
         </a>
-        <span>
+        <h1>
           {{ stack.0.title }}
-        </span>
+        </h1>
       </div>
       <div altr-for="frame in stack" style="width: {{ ((stack.length - 1) / stack.length) * 100}}%;">
         <div class="title-wrap" altr-if="$index" style="width: {{ 100 / (stack.length - 1) }}%;">
           <a href="#" rel="pop">
-            <svg class="pop" viewBox="0 0 24.00 24.00">
-              <path stroke-width="0.2" stroke-linejoin="round" d="M 13,18L 6,11L 13,4L 13,8C 21,8 24,19 24,19C 24,19 21,14 13,14L 13,18 Z M 7,18L 0,11L 7,4L 7,7L 3,11L 7,15L 7,18 Z "/>
+            <svg class="pop" viewBox="0 0 24 24">
+              <polygon points="17.743,2.669 16.257,1.331 6.655,12 16.257,22.669 17.743,21.331 9.345,12 "></polygon>
             </svg>
           </a>
-          <span>
+          <h1>
             {{ frame.title }}
-          </span>
+          </h1>
       </div>
       </div>
     </div>

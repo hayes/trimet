@@ -26,7 +26,7 @@ function push(item) {
   self.view.update(self, true)
   self.index += 1
   setTimeout(function() {
-    self.view.update(self)
+    self.view.update(self, true)
   }, 10)
 }
 
@@ -40,5 +40,5 @@ function pop(ev) {
   setTimeout(function() {
     self.stack.splice(top, 1)
     self.view.update(self, true)
-  }, 1000)
+  }, 500)
 }

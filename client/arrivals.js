@@ -8,6 +8,8 @@ var template = fs.readFileSync(
   , 'utf8'
 )
 
+altr.addFilter('route', format_route)
+
 module.exports = Arrivals
 
 function Arrivals() {
@@ -40,6 +42,22 @@ function update() {
     self.waiting = false
     self.view.update(self, true)
     clearTimeout(self.timer)
-    self.timer = setTimeout(update.bind(self, location), 5000)
+    self.timer = setTimeout(update.bind(self, location), 50000)
   }))
+}
+
+function format_route(change) {
+  return function(route) {
+    if(!route) {
+      return change('')
+    } else if(route.type === 'B') {
+      return change(
+          '<span class="bus-line-header">' + route.route + '</span>' +
+            '<span class="line-description">' +
+            route.desc.split(/\-/)[1] + '</span>'
+      )
+    }
+
+    return change('<span class="rail-line-header">' + route.route + '</span>')
+  }
 }
