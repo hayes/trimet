@@ -1,15 +1,7 @@
 <section rel="details" class="off-right">
   <ul class="card-list">
     <li>
-      <h4>{{ line.route.desc }}</h4>
-      <ul>
-        <li altr-if="line.outbound.arrivals.0">
-          {{ line.outbound.desc }}: {{ remaining(line.outbound.arrivals.0.estimated || line.outbound.arrivals.0.scheduled) }} minutes
-        </li>
-        <li altr-if="line.inbound.arrivals.0">
-          {{ line.inbound.desc }}: {{ remaining(line.inbound.arrivals.0.estimated || line.inbound.arrivals.0.scheduled) }} minutes
-        </li>
-      </ul>
+      <pre>{{ data }}</pre>
     </li>
   </ul>
 </section>

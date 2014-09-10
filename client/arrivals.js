@@ -3,7 +3,10 @@ var request = require('hyperquest')
 var altr = require('altr')
 var fs = require('fs')
 
-var template = fs.readFileSync(__dirname + '/templates/arrivals.html', 'utf8')
+var template = fs.readFileSync(
+    __dirname + '/templates/arrivals.html'
+  , 'utf8'
+)
 
 module.exports = Arrivals
 

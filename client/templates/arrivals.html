@@ -3,8 +3,8 @@
   <h3>Waiting for location...</h3>
   </li>
 </ul>
-<ul class="card-list" altr-for="line in lines" rel="line-arrival">
-  <li altr-if="line.outbound.arrivals.0 || line.inbound.arrivals.0">
+<ul class="card-list" altr-for="line in lines">
+  <li altr-if="line.outbound.arrivals.0 || line.inbound.arrivals.0" rel="line-arrival" data-index="{{ $index }}">
     <h4>{{ line.route.desc }}</h4>
     <ul>
       <li altr-if="line.outbound.arrivals.0">
