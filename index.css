@@ -43,7 +43,7 @@ div[rel=main] > section {
   z-index: 100;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
-  padding: 50px 0;
+  padding-top: 50px;
 }
 
 div[rel=main] > section.off-left {
