@@ -42,6 +42,7 @@ div[rel=main] > section {
   height: 100%;
   transition: margin .5s, opacity .5s;
   z-index: 100;
+  overflow: scroll;
 }
 
 div[rel=main] > section.off-left {
