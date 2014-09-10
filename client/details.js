@@ -24,6 +24,6 @@ function Details(arrivals, i) {
 Details.prototype.update = update
 
 function update(data) {
-  this.data = JSON.stringify(data, null, 2)
+  this.data = JSON.stringify(data, null, 4)
   this.view.update(this)
 }
