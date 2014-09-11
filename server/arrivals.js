@@ -5,21 +5,34 @@ var request = require('hyperquest')
 
 module.exports = function(options, done) {
   get_stops(options.location, function(err, stops) {
-    get_arrivals(stops, function(err, arrivals) {
+    if(err) {
+      return done(err)
+    }
+
+    get_arrivals(stops, function(err, data) {
+      if(err) {
+        return done(err)
+      }
+
+      var arrivals = data.resultSet.arrival
+      var time = data.resultSet.queryTime
+
       var lines = {}
         , list = []
         , key
+        , i
+        , l
 
-      for(var i = 0, l = stops.length; i < l; ++i) {
+      for(i = 0, l = stops.length; i < l; ++i) {
         stops[i].route && stops[i].route.forEach(add.bind(null, stops[i]))
       }
 
-      for(var i = 0, l = arrivals.length; i < l; ++i) {
+      for(i = 0, l = arrivals.length; i < l; ++i) {
         key = arrivals[i].dir ? 'inbound' : 'outbound'
         lines[arrivals[i].route][key].arrivals.push(arrivals[i])
       }
 
-      done(null, list)
+      done(null, {time: time, lines: list})
 
       function add(stop, route) {
         var line = lines[route.route]
@@ -33,11 +46,11 @@ module.exports = function(options, done) {
           list.push(line)
         }
 
-        for(var i = 0, l = route.dir.length; i < l; ++i) {
-          line[route.dir[i].dir ? 'inbound' : 'outbound'] = {
+        for(var j = 0, l2 = route.dir.length; j < l2; ++j) {
+          line[route.dir[j].dir ? 'inbound' : 'outbound'] = {
               stop: stop
             , arrivals: []
-            , desc: route.dir[i].desc
+            , desc: route.dir[j].desc
           }
         }
       }
@@ -59,7 +72,7 @@ function get_arrivals(stops, done) {
     qs.stringify(options)
 
   request.get(url).pipe(concat(function(data) {
-    done(null, JSON.parse(data).resultSet.arrival)
+    done(null, JSON.parse(data))
   }))
 
   function get_locid(stop) {

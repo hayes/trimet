@@ -38,11 +38,11 @@ function update() {
     self.location.coords.latitude + ',' + self.location.coords.longitude
 
   request.get(url).pipe(concat(function(data) {
-    self.lines = JSON.parse(data)
+    self.data = JSON.parse(data)
     self.waiting = false
     self.view.update(self, true)
     clearTimeout(self.timer)
-    self.timer = setTimeout(update.bind(self, location), 50000)
+    self.timer = setTimeout(update.bind(self, location), 5000)
   }))
 }
 

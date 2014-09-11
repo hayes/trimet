@@ -3,15 +3,15 @@
   <h3>Waiting for location...</h3>
   </li>
 </ul>
-<ul class="card-list" altr-for="line in lines">
+<ul class="card-list" altr-for="line in data.lines">
   <li altr-if="line.outbound.arrivals.0 || line.inbound.arrivals.0" rel="line-arrival" data-index="{{ $index }}">
   <div class="header" altr-html="route(line.route)"></div>
     <ul>
       <li altr-if="line.inbound.arrivals.0">
-        {{ line.inbound.desc }} @ {{line.inbound.stop.desc }}: {{ remaining(line.inbound.arrivals.0.estimated || line.inbound.arrivals.0.scheduled) }} minutes
+        {{ line.inbound.desc }} @ {{line.inbound.stop.desc }}: {{ remaining(line.inbound.arrivals.0.estimated || line.inbound.arrivals.0.scheduled, data.time) }} minutes
       </li>
       <li altr-if="line.outbound.arrivals.0">
-        {{ line.outbound.desc }} @ {{line.outbound.stop.desc }}: {{ remaining(line.outbound.arrivals.0.estimated || line.outbound.arrivals.0.scheduled) }} minutes
+        {{ line.outbound.desc }} @ {{line.outbound.stop.desc }}: {{ remaining(line.outbound.arrivals.0.estimated || line.outbound.arrivals.0.scheduled, data.time) }} minutes
       </li>
     </ul>
   </li>

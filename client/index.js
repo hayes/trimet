@@ -7,8 +7,14 @@ var altr = require('altr')
 var events = delegate(document)
 
 altr.addFilter('remaining', function(change) {
-  return function(time) {
-    change(Math.floor((new Date(time) - new Date) / (60 * 1000)))
+  return function(time, query) {
+    if(!time || !query) {
+      return
+    }
+
+    var remaining = (time - query) / (60 * 1000)
+
+    change(remaining < 0 ? Math.ceil(remaining) : Math.floor(remaining))
   }
 })
 

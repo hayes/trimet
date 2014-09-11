@@ -18,7 +18,7 @@ function Details(arrivals, i) {
   this.waiting = true
   this.view = altr(template, this)
   this.el = this.view.rootNodes()
-  arrivals.view.lookups.register('lines.' + i, this.update.bind(this))
+  arrivals.view.lookups.register('data.lines.' + i, this.update.bind(this))
 }
 
 Details.prototype.update = update
