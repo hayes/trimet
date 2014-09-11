@@ -43,6 +43,14 @@ server.route({
     }
 })
 
+server.route({
+    method: 'GET'
+  , path: '/arrivals/{id}'
+  , handler: function(req, reply) {
+      reply(req)
+    }
+})
+
 server.start(function() {
   console.log('Server running at:', server.info.uri)
 })

@@ -25,6 +25,11 @@ function push(item) {
   self.stack.push(item)
   self.view.update(self, true)
   self.index += 1
+
+  if(self.index > 0) {
+    self.stack[self.index - 1].pause && self.stack[self.index - 1].pause()
+  }
+
   setTimeout(function() {
     self.view.update(self, true)
   }, 10)
@@ -33,12 +38,15 @@ function push(item) {
 function pop(ev) {
   var self = this
   var top = self.index
+  var next = self.stack[self.stack.length - 1]
 
   ev && ev.preventDefault && ev.preventDefault()
   self.index -= 1
   self.view.update(self, true)
+  next.resume && next.resume()
   setTimeout(function() {
     self.stack.splice(top, 1)
     self.view.update(self, true)
+    top.destroy && top.destroy()
   }, 500)
 }

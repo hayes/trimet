@@ -43,7 +43,7 @@ function update() {
     self.waiting = false
     self.view.update(self, true)
     clearTimeout(self.timer)
-    //self.timer = setTimeout(update.bind(self, location), 5000)
+    self.timer = setTimeout(update.bind(self, location), 5000)
   }))
 }
 

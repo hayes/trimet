@@ -9,13 +9,13 @@ module.exports = function(options, done) {
       return done(err)
     }
 
-    get_arrivals(stops, function(err, data) {
+    get_arrivals(stops.map(get_locid), {}, function(err, data) {
       if(err) {
         return done(err)
       }
 
-      var arrivals = data.resultSet.arrival
-      var time = data.resultSet.queryTime
+      var arrivals = data.arrivals
+      var time = data.time
 
       var lines = {}
         , list = []
@@ -58,26 +58,42 @@ module.exports = function(options, done) {
   })
 }
 
-function get_arrivals(stops, done) {
-  var options = {
-      appID: app_id
-    , locIDs: stops.map(get_locid).join(',')
-    , showPosition: true
-    , minutes: 20
-    , arrivals: 2
-    , json: true
+module.exports.stop = function(id, done) {
+  get_arrivals([id], {}, done)
+}
+
+function get_arrivals(stops, options, done) {
+  options.appID = app_id
+  options.json = true
+
+  var url = 'http://developer.trimet.org/ws/v2/arrivals?'
+
+  var remaining = Math.ceil(stops.length / 10)
+  var arrivals = []
+
+  for(var i = 0, l = remaining; i < l; ++i) {
+    options.locIDs = stops.slice(i * 10, (i + 1) * 10).join(',')
+    request.get(url + qs.stringify(options)).pipe(concat(on_results))
   }
 
-  var url = 'http://developer.trimet.org/ws/v2/arrivals?' +
-    qs.stringify(options)
+  function on_results(data) {
+    data = JSON.parse(data)
 
-  request.get(url).pipe(concat(function(data) {
-    done(null, JSON.parse(data))
-  }))
+    arrivals = arrivals.concat(data.resultSet.arrival)
 
-  function get_locid(stop) {
-    return stop.locid
+    if(--remaining) {
+      return
+    }
+
+    done(null, {
+        time: data.resultSet.queryTime
+      , arrivals: arrivals
+    })
   }
+}
+
+function get_locid(stop) {
+  return stop.locid
 }
 
 function get_stops(location, done) {
@@ -86,7 +102,7 @@ function get_stops(location, done) {
     , ll: location
     , showRoutes: true
     , showRouteDirs: true
-    , feet: 2640
+    , feet: 5280
     , json: true
   }
 
@@ -94,7 +110,7 @@ function get_stops(location, done) {
 
   request.get(url).pipe(concat(function(data) {
     var seen = {}
-    var stops = JSON.parse(data).resultSet.location.filter(unique).slice(0, 10)
+    var stops = JSON.parse(data).resultSet.location.filter(unique)
 
     done(null, stops)
 
