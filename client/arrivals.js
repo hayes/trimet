@@ -9,6 +9,7 @@ var template = fs.readFileSync(
 )
 
 altr.addFilter('route', format_route)
+altr.addFilter('remaining', remaining)
 
 module.exports = Arrivals
 
@@ -42,7 +43,7 @@ function update() {
     self.waiting = false
     self.view.update(self, true)
     clearTimeout(self.timer)
-    self.timer = setTimeout(update.bind(self, location), 5000)
+    //self.timer = setTimeout(update.bind(self, location), 5000)
   }))
 }
 
@@ -72,4 +73,29 @@ function format_route(change) {
           route.desc + '</span>'
     )
   }
+}
+
+function remaining(change) {
+  return function(arrival, query) {
+    if(!arrival || !query) {
+      return
+    }
+
+    var time = arrival.estimated || arrival.scheduled
+    var remaining = (time - query) / (60 * 1000)
+
+    remaining = remaining < 0 ? Math.ceil(remaining) : Math.floor(remaining)
+    change(format(remaining))
+  }
+}
+
+function format(min) {
+  return '<span class="time">' +
+    (min > 60 ? Math.floor(min / 60) + ':' + pad(min) % 60 : min) +
+    '</span><span class="unit">' + (min > 60 ? 'hours' : 'minutes') +
+    '</span>'
+}
+
+function pad(n) {
+  return ('00' + n).slice(-2)
 }
