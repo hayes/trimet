@@ -92,10 +92,13 @@ function remaining(change) {
 function format(min) {
   return '<span class="time">' +
     (min > 60 ? Math.floor(min / 60) + ':' + pad(min) % 60 : min) +
-    '</span><span class="unit">' + (min > 60 ? 'hours' : 'minutes') +
-    '</span>'
+    '</span><span class="unit">' + unit(min) + '</span>'
 }
 
 function pad(n) {
   return ('00' + n).slice(-2)
+}
+
+function unit(n) {
+  return (n > 59 ? 'hour' : 'minute') + ((n === 1 || n === 60) ? '' : 's')
 }
