@@ -46,7 +46,7 @@ function push() {
   window.history.pushState({
       args: [].slice.call(arguments)
     , index: this.index
-  }, frame.title, '/?' + frame.title)
+  }, frame.title, '/')
 }
 
 function create(type) {
