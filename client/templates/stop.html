@@ -1,0 +1,27 @@
+<section rel="details" class="off-right">
+  <ul class="card-list" altr-for="arrival in data.arrivals">
+    <li>
+      <div class="header" altr-if="arrival_type(arrival) === 'bus'">
+        <span class="bus-line-header">
+          {{ arrival.route }}
+        </span>
+        <span class="line-description">
+          {{ format_line(arrival.fullSign) }}
+        </span>
+      </div>
+      <div class="header" altr-if="arrival_type(arrival) !== 'bus'">
+        <span class="rail-line-header {{ color(arrival.route) }}">
+          {{ split(arrival.fullSign, ' to ')[0] }}
+        </span>
+        <span class="line-description">
+          to {{ split(arrival.fullSign, ' to ')[1] }}
+        </span>
+      </div>
+    </li>
+  </ul>
+  <ul class="card-list">
+    <li>
+      <pre>{{ raw }}</pre>
+    </li>
+  </ul>
+</section>
