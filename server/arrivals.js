@@ -59,7 +59,7 @@ module.exports = function(options, done) {
 }
 
 module.exports.stop = function(id, done) {
-  get_arrivals([id], {}, function(err, data) {
+  get_arrivals([id], {data: true, arrivals: 4, showPosition: true}, function(err, data) {
     if(err) {
       return done(err)
     }

@@ -14,11 +14,29 @@
           {{ split(arrival.fullSign, ' to ')[0] }}
         </span>
       </div>
-    </li>
-  </ul>
-  <ul class="card-list">
-    <li>
-      <pre>{{ raw }}</pre>
+      <ul class="arrival-list">
+        <li class="arrival-line">
+          <div class="arrival-direction">
+            <span>
+              Scheduled: {{ time(arrival.scheduled) }}
+            </span>
+             <span>
+              Estimated: {{ arrival.estimated ? time(arrival.estimated) : 'Not Avaiable' }}
+            </span>
+            <span>
+              In Congestion: {{ arrival.inCongestion }}
+            </span>
+            <span>
+              Departed: {{ arrival.departed }}
+            </span>
+            <span>
+              Detoured: {{ arrival.detoured }}
+            </span>
+          </div>
+          <div class="arrival-time" altr-html="remaining(arrival, data.time)">
+          </div>
+        </li>
+      </ul>
     </li>
   </ul>
 </section>

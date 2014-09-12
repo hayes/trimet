@@ -6,6 +6,7 @@ altr.addFilter('arrival_type', type)
 altr.addFilter('remaining', remaining)
 altr.addFilter('color', color)
 altr.addFilter('split', split)
+altr.addFilter('time', time)
 
 document.querySelector('[rel=sidebar-toggle]')
   .addEventListener('click', toggle_sidebar)
@@ -48,21 +49,30 @@ function split(change) {
 function remaining(change) {
   return function(arrival, query) {
     if(!arrival || !query) {
-      return
+      change('')
     }
 
-    var time = arrival.estimated || arrival.scheduled
+    var time = typeof arrival === 'object' ?
+      arrival.estimated || arrival.scheduled :
+      arrival
+
     var remaining = (time - query) / (60 * 1000)
 
     remaining = remaining < 0 ? Math.ceil(remaining) : Math.floor(remaining)
-    change(format(remaining))
+    change(format(remaining, time))
   }
 }
 
-function format(min) {
-  return '<span class="time">' +
-    (min > 60 ? Math.floor(min / 60) + ':' + pad(min) % 60 : min) +
-    '</span><span class="unit">' + unit(min) + '</span>'
+function format(min, time) {
+  if(min < 60) {
+    return '<span class="time">' + min + '</span><span class="unit">' +
+      unit(min) + '</span>'
+  }
+
+  time = format_time(new Date(time))
+
+  return '<span class="time">' + time.time +
+    '</span><span class="unit">' + time.unit + '</span>'
 }
 
 function pad(n) {
@@ -86,4 +96,29 @@ function color(change) {
 
     change(colors[line] || 'light-blue')
   }
+}
+
+function time(change) {
+  return function(ts) {
+    var date = format_time(new Date(ts))
+
+    change(date.time + ' ' + date.unit)
+  }
+}
+
+function format_time(date) {
+  var parts = {
+      hours: (((date.getHours() - 1) % 12) + 1)
+    , minutes: pad(date.getMinutes())
+    , part: (date.getHours() > 12 ? 'pm' : 'am')
+    , days: (date.getDay() - new Date().getDay() + 7 ) % 7
+  }
+
+  var diff = (date - new Date)
+
+  if(parts.days && diff > 6 * 60 * 60 * 1000) {
+    return {unit: parts.days > 1 ? 'days' : 'day', time: parts.days}
+  }
+
+  return {unit: parts.part, time: parts.hours + ':' + parts.minutes}
 }

@@ -57,7 +57,6 @@ function create(type) {
 
   frame = typeof result === 'undefined' ? frame : result
   self.stack.push(frame)
-  console.log(frame)
   self.view.update(self, true)
   self.index += 1
 
