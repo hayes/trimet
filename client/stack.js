@@ -1,5 +1,12 @@
 var delegate = require('dom-delegate')
+var Arrivals = require('./arrivals')
+var Stop = require('./stop')
 var altr = require('altr')
+
+var types = {
+    arrivals: Arrivals
+  , stop: Stop
+}
 
 module.exports = Stack
 
@@ -8,21 +15,49 @@ function Stack(el) {
     return new Stack(el)
   }
 
-  this.el = el
-  this.index = -1
-  this.stack = []
-  this.view = altr(el, this)
-  this.events = delegate(el)
-  this.events.on('click', '[rel=pop]', this.pop.bind(this))
+  var self = this
+
+  self.el = el
+  self.index = -1
+  self.stack = []
+  self.view = altr(el, self)
+  self.events = delegate(el)
+  self.events.on('click', '[rel=pop]', function(ev) {
+    ev.preventDefault()
+    window.history.back()
+  })
+
+  window.onpopstate = function(ev) {
+    if(ev.state && ev.state.index > self.index) {
+      return self.create.apply(self, ev.state.args)
+    }
+
+    self.pop()
+  }
 }
 
+Stack.prototype.create = create
 Stack.prototype.push = push
 Stack.prototype.pop = pop
 
-function push(item) {
-  var self = this
+function push() {
+  var frame = this.create.apply(this, arguments)
 
-  self.stack.push(item)
+  window.history.pushState({
+      args: [].slice.call(arguments)
+    , index: this.index
+  }, frame.title, '/?' + frame.title)
+}
+
+function create(type) {
+  var self = this
+  var frame = Object.create(types[type].prototype)
+  var args = [].slice.call(arguments, 1).concat([self])
+  var result = types[type].apply(frame, args)
+
+  frame = typeof result === 'undefined' ? frame : result
+  self.stack.push(frame)
+  console.log(frame)
   self.view.update(self, true)
   self.index += 1
 
@@ -33,6 +68,8 @@ function push(item) {
   setTimeout(function() {
     self.view.update(self, true)
   }, 10)
+
+  return frame
 }
 
 function pop(ev) {

@@ -1,7 +1,6 @@
 var delegate = require('dom-delegate')
 var concat = require('concat-stream')
 var request = require('hyperquest')
-var Stop = require('./stop')
 var altr = require('altr')
 var fs = require('fs')
 
@@ -28,10 +27,11 @@ function Arrivals(stack) {
 
   events.on('click', '[rel=stop-location]', function(ev, target) {
     ev.preventDefault()
-    stack.push(new Stop(
-        target.getAttribute('data-id')
+    stack.push(
+        'stop'
+      , target.getAttribute('data-id')
       , target.getAttribute('data-title')
-    ))
+    )
   })
 
   navigator.geolocation.watchPosition(function(location) {

@@ -1,4 +1,3 @@
-var Arrivals = require('./arrivals')
 var Stack = require('./stack')
 var altr = require('altr')
 
@@ -13,7 +12,7 @@ document.querySelector('[rel=sidebar-toggle]')
 
 var stack = new Stack(document.body)
 
-stack.push(new Arrivals(stack))
+stack.create('arrivals')
 
 function toggle_sidebar(ev) {
   ev.preventDefault()
