@@ -37,15 +37,15 @@ function push(item) {
 
 function pop(ev) {
   var self = this
-  var top = self.index
-  var next = self.stack[self.stack.length - 1]
+  var top = self.stack[self.index]
+  var next = self.stack[self.index - 1]
 
   ev && ev.preventDefault && ev.preventDefault()
   self.index -= 1
   self.view.update(self, true)
   next.resume && next.resume()
   setTimeout(function() {
-    self.stack.splice(top, 1)
+    self.stack.splice(self.stack.indexOf(top), 1)
     self.view.update(self, true)
     top.destroy && top.destroy()
   }, 500)

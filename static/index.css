@@ -126,7 +126,7 @@ ul.card-list > li {
 /*
   Arrival cards
 */
-[rel=line-arrival] .header {
+.card-list .header {
   margin: 0 0 10px 0;
   padding: 0;
   padding: 0 15px;
@@ -134,7 +134,7 @@ ul.card-list > li {
   border-bottom: 1px solid rgba(0, 0, 0, 0.20);
 }
 
-[rel=line-arrival] .header .bus-line-header {
+.card-list .header .bus-line-header {
   color:  #03a9f4;
   font-size: 32px;
   font-weight: 700;
@@ -142,10 +142,11 @@ ul.card-list > li {
   text-shadow: rgba(0, 0, 0, 0.46) 0 2px 2px;
 }
 
-[rel=line-arrival] .header .rail-line-header {
+.card-list .header .rail-line-header {
   padding-top: 10px;
   font-size: 22px;
   font-weight: 700;
+  margin-right: 20px;
   display: inline-block;
   text-shadow: rgba(0, 0, 0, 0.46) 0 1px 1px;
 }

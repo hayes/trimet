@@ -59,7 +59,14 @@ module.exports = function(options, done) {
 }
 
 module.exports.stop = function(id, done) {
-  get_arrivals([id], {}, done)
+  get_arrivals([id], {}, function(err, data) {
+    if(err) {
+      return done(err)
+    }
+
+    data.location = data.locations[0]
+    done(data)
+  })
 }
 
 function get_arrivals(stops, options, done) {
@@ -70,6 +77,8 @@ function get_arrivals(stops, options, done) {
 
   var remaining = Math.ceil(stops.length / 10)
   var arrivals = []
+  var locations = []
+  var detours = []
 
   for(var i = 0, l = remaining; i < l; ++i) {
     options.locIDs = stops.slice(i * 10, (i + 1) * 10).join(',')
@@ -80,6 +89,8 @@ function get_arrivals(stops, options, done) {
     data = JSON.parse(data)
 
     arrivals = arrivals.concat(data.resultSet.arrival)
+    locations = locations.concat(data.resultSet.location)
+    detours = detours.concat(data.resultSet.detour)
 
     if(--remaining) {
       return
@@ -88,6 +99,8 @@ function get_arrivals(stops, options, done) {
     done(null, {
         time: data.resultSet.queryTime
       , arrivals: arrivals
+      , locations: locations
+      , detours: detours
     })
   }
 }

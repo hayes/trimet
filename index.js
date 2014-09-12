@@ -47,7 +47,9 @@ server.route({
     method: 'GET'
   , path: '/arrivals/{id}'
   , handler: function(req, reply) {
-      reply(req)
+      arrivals.stop(req.params.id, function(err, data) {
+        reply(err || data)
+      })
     }
 })
 
