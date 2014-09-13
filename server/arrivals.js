@@ -29,13 +29,18 @@ module.exports = function(options, done) {
 
       for(i = 0, l = arrivals.length; i < l; ++i) {
         key = arrivals[i].dir ? 'inbound' : 'outbound'
-        lines[arrivals[i].route][key].arrivals.push(arrivals[i])
+
+        if(!lines[arrivals[i].route][key].arrivals.length) {
+          lines[arrivals[i].route][key].arrivals.push(arrivals[i])
+        } else if(arrivals[i].route == 77) {
+        }
       }
 
       done(null, {time: time, lines: list})
 
       function add(stop, route) {
         var line = lines[route.route]
+        var key
 
         if(!line) {
           line = {
@@ -47,7 +52,13 @@ module.exports = function(options, done) {
         }
 
         for(var j = 0, l2 = route.dir.length; j < l2; ++j) {
-          line[route.dir[j].dir ? 'inbound' : 'outbound'] = {
+          key = route.dir[j].dir ? 'inbound' : 'outbound'
+
+          if(line[key]) {
+            continue
+          }
+
+          line[key] = {
               stop: stop
             , arrivals: []
             , desc: route.dir[j].desc
@@ -79,29 +90,34 @@ function get_arrivals(stops, options, done) {
   var arrivals = []
   var locations = []
   var detours = []
+  var results = new Array(remaining)
 
   for(var i = 0, l = remaining; i < l; ++i) {
     options.locIDs = stops.slice(i * 10, (i + 1) * 10).join(',')
-    request.get(url + qs.stringify(options)).pipe(concat(on_results))
+    request.get(url + qs.stringify(options)).pipe(concat(on_results.bind(null, i)))
   }
 
-  function on_results(data) {
-    data = JSON.parse(data)
-
-    arrivals = arrivals.concat(data.resultSet.arrival)
-    locations = locations.concat(data.resultSet.location)
-    detours = detours.concat(data.resultSet.detour)
+  function on_results(i, data) {
+    results[i] = JSON.parse(data).resultSet
 
     if(--remaining) {
       return
     }
 
-    done(null, {
-        time: data.resultSet.queryTime
-      , arrivals: arrivals
-      , locations: locations
-      , detours: detours
-    })
+    var output = {
+        arrivals: []
+      , locations: []
+      , detours: []
+    }
+
+    for(var j = 0, l2 = results.length; j < l2; ++j) {
+      output.arrivals = output.arrivals.concat(results[j].arrival)
+      output.locations = output.locations.concat(results[j].location)
+      output.detours = output.detours.concat(results[j].detour)
+    }
+
+    output.time = results[i].queryTime
+    done(null, output)
   }
 }
 
@@ -115,7 +131,7 @@ function get_stops(location, done) {
     , ll: location
     , showRoutes: true
     , showRouteDirs: true
-    , feet: 5280
+    , feet: 2640
     , json: true
   }
 
