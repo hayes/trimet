@@ -1,3 +1,4 @@
+var nr = require('newrelic')
 var Hapi = require('hapi')
 var server = new Hapi.Server(3000)
 var arrivals = require('./server/arrivals')
