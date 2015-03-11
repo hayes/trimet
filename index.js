@@ -1,6 +1,6 @@
 var nr = require('newrelic')
 var Hapi = require('hapi')
-var server = new Hapi.Server(3000)
+var server = new Hapi.Server(8080)
 var arrivals = require('./server/arrivals')
 var watchify = require('watchify/bin/args')
 var brfs = require('brfs')
