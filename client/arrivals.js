@@ -47,7 +47,7 @@ Arrivals.prototype.resume = resume
 
 function update() {
   var self = this
-  var url = 'http://' + window.location.host + '/arrivals?location=' +
+  var url = window.location.protocol + '//' + window.location.host + '/arrivals?location=' +
     self.location.coords.latitude + ',' + self.location.coords.longitude
 
   request.get(url).pipe(concat(function(data) {

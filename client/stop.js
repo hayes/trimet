@@ -29,7 +29,7 @@ Stop.prototype.destroy = pause
 
 function update() {
   var self = this
-  var url = 'http://' + window.location.host + '/arrivals/' + self.id
+  var url = window.location.protocol + '//' + window.location.host + '/arrivals/' + self.id
 
   request.get(url).pipe(concat(function(data) {
     self.data = JSON.parse(data)
