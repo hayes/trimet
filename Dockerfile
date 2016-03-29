@@ -1,2 +1,2 @@
-FROM nodejs:onbuild
+FROM node
 EXPOSE 8080
