@@ -4,6 +4,8 @@ var server = new Hapi.Server(5000)
 var arrivals = require('./server/arrivals')
 var watchify = require('watchify/bin/args')
 var brfs = require('brfs')
+var path = require('path')
+var fs = require('fs')
 
 var bundle = watchify()
 
@@ -13,8 +15,11 @@ bundle.transform(brfs)
 server.route({
     method: 'GET'
   , path: '/'
-  , handler: {
-        file: './static/index.html'
+  , handler: function (req, reply) {
+      fs.readFile(path.join(__dirname, 'static/index.html'), function (err, data) {
+        if (err) return reply(err)
+        reply(data.toString().replace('{NR_BROWSER}', nr.getBrowserTimingHeader()))
+      })
     }
 })
 

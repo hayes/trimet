@@ -23,16 +23,15 @@ module.exports = function(options, done) {
         , i
         , l
 
-      for(i = 0, l = stops.length; i < l; ++i) {
+      for (i = 0, l = stops.length; i < l; ++i) {
         stops[i].route && stops[i].route.forEach(add.bind(null, stops[i]))
       }
 
-      for(i = 0, l = arrivals.length; i < l; ++i) {
+      for (i = 0, l = arrivals.length; i < l; ++i) {
         key = arrivals[i].dir ? 'inbound' : 'outbound'
 
-        if(!lines[arrivals[i].route][key].arrivals.length) {
+        if (lines[arrivals[i].route] && !lines[arrivals[i].route][key].arrivals.length) {
           lines[arrivals[i].route][key].arrivals.push(arrivals[i])
-        } else if(arrivals[i].route == 77) {
         }
       }
 

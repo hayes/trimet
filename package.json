@@ -24,7 +24,7 @@
     "dom-delegate": "^2.0.3",
     "hapi": "^6.8.1",
     "hyperquest": "^0.3.0",
-    "newrelic": "^1.12.0",
+    "newrelic": "^1.28.0",
     "watchify": "^1.0.2"
   }
 }
