@@ -92,6 +92,7 @@ function color(change) {
       , 193: 'teal'
       , 194: 'lime'
       , 200: 'green'
+      , 290: 'orange'
     }
 
     change(colors[line] || 'light-blue')
