@@ -13,6 +13,31 @@ html, body {
   font-weight: 300;
 }
 
+#map {
+  transition: all .3s ease-in 0s;
+  position: absolute;
+  width: 100%;
+  z-index: 500;
+  top: 40px;
+  bottom: 0;
+}
+
+#map.initial {
+  transition: all 0s;
+}
+
+#map.hidden {
+  position: absolute;
+  z-index: 500;
+  top: 100%;
+  bottom: 0;
+  height: auto !important;
+}
+
+[rel=map-toggle] {
+  float: right;
+}
+
 .sidebar {
   width: 80%;
   max-width: 400px;

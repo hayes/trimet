@@ -4,6 +4,8 @@ var request = require('hyperquest')
 var altr = require('altr')
 var fs = require('fs')
 
+var map = require('./map')
+
 var template = fs.readFileSync(
     __dirname + '/templates/arrivals.html'
   , 'utf8'
@@ -36,8 +38,10 @@ function Arrivals(stack) {
 
   navigator.geolocation.watchPosition(function(location) {
     self.location = location
+    const {longitude, latitude} = location.coords
+    map.setCenter([longitude, latitude])
     self.update()
-  })
+  }, null, {enableHighAccuracy: true})
 }
 
 Arrivals.prototype.update = update
