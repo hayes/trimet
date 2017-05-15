@@ -1,6 +1,8 @@
 var Stack = require('./stack')
 var altr = require('altr')
 
+require('./map')
+
 altr.addFilter('format_line', format_line)
 altr.addFilter('arrival_type', type)
 altr.addFilter('remaining', remaining)
@@ -11,9 +13,17 @@ altr.addFilter('time', time)
 document.querySelector('[rel=sidebar-toggle]')
   .addEventListener('click', toggle_sidebar)
 
+document.querySelector('[rel=map-toggle]')
+  .addEventListener('click', toggleMap)
+
 var stack = new Stack(document.body)
 
 stack.create('arrivals')
+
+function toggleMap (ev) {
+  ev.preventDefault()
+  document.getElementById('map').classList.toggle('hidden')
+}
 
 function toggle_sidebar(ev) {
   ev.preventDefault()
